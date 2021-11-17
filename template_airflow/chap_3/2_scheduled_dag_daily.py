@@ -7,11 +7,11 @@ from airflow.operators.bash import BashOperator
 from airflow.operators.python import PythonOperator
  
 #Dag non fonctionnel api non existante continue indefiniment si end data non specifie
-dag = DAG( 
-    dag_id="04_time_delta", 
-    schedule_interval= dt.timedelta(days=3) ,               
-    start_date=dt.datetime(year=2019, month=1, day=1), 
-    end_date=dt.datetime(year=2019 , mois=1, jour=5), 
+dag = DAG(
+    dag_id="02_daily_schedule",
+    schedule_interval="@daily",  #tout les jours         
+    start_date=dt.datetime(2019, 1, 1),  
+    end_date=dt.datetime(year=2019, month=1, jour=5),   #sinon specifier continue a l'infinie
 )
  
 fetch_events = BashOperator(

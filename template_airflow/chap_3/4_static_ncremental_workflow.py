@@ -6,24 +6,24 @@ from airflow import DAG
 from airflow.operators.bash import BashOperator
 from airflow.operators.python import PythonOperator
  
-#Dag non fonctionnel api non existante
-dag = DAG(
-   dag_id="01_unscheduled",
-   start_date=dt.datetime(2019, 1, 1),                            # definie la date de dubt du DAG
-   schedule_interval=None,                                        # Specifie aue c'est un Dag non schedule
-
+#Dag non fonctionnel api non existante continue indefiniment si end data non specifie
+dag = DAG( 
+    dag_id="04_time_delta", 
+    schedule_interval= dt.timedelta(days=3) ,   #Tout les 3 jours
+    start_date=dt.datetime(year=2019, month=1, day=1), 
+    end_date=dt.datetime(year=2019 , month=1, day=5), #sinon specifier continue a l'infinie
 )
- 
 fetch_events = BashOperator(
-   task_id="fetch_events",
-   bash_command=(
-      "mkdir -p /data && "
-      "curl -o /data/events.json "
-      "http://localhost:5000/events"                            
-   ), 
-   dag=dag,
+    task_id="fetch_events",
+    bash_command=(
+        "mkdir -p /data && "
+        "curl -o /data/events.json " 
+        "http://localhost:5000/events?"
+        "start_date=2019-01-01&" #Statique appel api debut
+        "end_date=2019-01-02" #Statique appel api fin
+    ),
+    dag=dag,
 )
- 
  
 def _calculate_stats(input_path, output_path):
    """Calculates event statistics."""

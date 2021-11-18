@@ -22,10 +22,11 @@ if __name__ == "__main__":
         df.createOrReplaceTempView("us_delay_flights_tbl")
 
         # Create cubed function
-        def cubed(s): return s * s * s
+        def cubed(s):
+            return s * s * s
+
         # Register UDF
         spark.udf.register("cubed", cubed, LongType())
-
 
         query_0 = """SELECT distance, origin, destination 
                      FROM us_delay_flights_tbl WHERE distance > 1000 
@@ -37,14 +38,12 @@ if __name__ == "__main__":
 
         query_2 = """SELECT cubed(distance), origin, destination 
                      FROM us_delay_flights_tbl WHERE distance > 1000 
-                     ORDER BY distance DESC""" 
+                     ORDER BY distance DESC"""
 
         all_query = [query_0, query_1]
 
-        for query in all_query: 
+        for query in all_query:
             spark.sql(query).show(10)
-
-        
 
     else:
         raise Exception("Le chemin n'existe pas.")

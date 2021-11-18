@@ -45,7 +45,7 @@ if __name__ == "__main__":
 
         for query in all_query:
             spark.sql(query).show(10)
-        
+
         df = spark.sql(query)
         df.show(14)
     else:

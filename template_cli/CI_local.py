@@ -16,6 +16,7 @@ def packaging_solution(packaging: bool):
     else:
         pass
 
+
 @click.command(help="push la solution sur git ou gitlab")
 @click.option("--push", default=True, help="d'abord set le git")
 def push_to_git(push: bool):

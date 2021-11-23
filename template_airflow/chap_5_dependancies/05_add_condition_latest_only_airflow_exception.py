@@ -22,7 +22,7 @@ def _latest_only(**context):
     right_window = context["dag"].following_schedule(left_window)
 
     if not left_window < now <= right_window:
-        raise AirflowSkipException() #tache ignore et marquee comme telle
+        raise AirflowSkipException() #tache terminee et marquee comme ignore
 
 
 with DAG(

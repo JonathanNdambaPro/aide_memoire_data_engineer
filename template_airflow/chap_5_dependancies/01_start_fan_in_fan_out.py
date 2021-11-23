@@ -21,8 +21,8 @@ with DAG(
     train_model = DummyOperator(task_id="train_model")
     deploy_model = DummyOperator(task_id="deploy_model")
 
-    start >> [fetch_sales, fetch_weather]
+    start >> [fetch_sales, fetch_weather] # lancement de deux operation en parallele
     fetch_sales >> clean_sales
     fetch_weather >> clean_weather
-    [clean_sales, clean_weather] >> join_datasets
+    [clean_sales, clean_weather] >> join_datasets # Jointure de deux operation qui sont en parraleles
     join_datasets >> train_model >> deploy_model

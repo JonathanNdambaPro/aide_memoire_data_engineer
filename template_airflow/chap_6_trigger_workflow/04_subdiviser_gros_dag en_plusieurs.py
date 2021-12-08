@@ -37,7 +37,7 @@ for supermarket_id in range(1, 5):
     process = DummyOperator(task_id=f"process_supermarket_{supermarket_id}", dag=dag1)
     trigger_create_metrics_dag = TriggerDagRunOperator( #permet de trigger un autre dag
         task_id=f"trigger_create_metrics_dag_supermarket_{supermarket_id}",
-        trigger_dag_id="listing_6_04_dag02", #nom du dag a trigger
+        trigger_dag_id="listing_6_04_dag02", #nom du dag a trigger doit avoir le meme id que le dag a trigger
         dag=dag1,
     )
     wait >> copy >> process >> trigger_create_metrics_dag

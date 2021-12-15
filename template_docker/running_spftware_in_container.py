@@ -25,7 +25,7 @@ CMD_3 = "docker run -it \
 # La durée d'exécution du conteneur
 # Les ports réseau exposés par le conteneur
 # Le nom du conteneur
-CMD_4 = "docker ps"
+CMD_4 = "docker ps -a"
 
 
 #demarrer un conteneur arrete
@@ -56,8 +56,33 @@ CMD_9 = """docker system prune -a"""
 CMD_10 = """ docker exec namespaceA ps &\
     docker exec namespaceB ps"""
 
+
+#Stocker l'id de l'mqge dans une variale d'environement dans la variale 
+CMD_11 = """MAILER_CID=$(docker run -d dockerinaction/ch2_mailer)
+WEB_CID=$(docker create nginx)
+
+AGENT_CID=$(docker create --link $WEB_CID:insideweb \
+    --link $MAILER_CID:insidemailer \
+    dockerinaction/ch2_agent)"""
+    
+#Lecture e fichier seul
+CMD_12 = """docker run -d --name wp --read-only \
+    wordpress:5.0.0-php7.2-apache"""
+
+
+#injection de variable d'environement dans le docker puis (Derniere ligne) execution
+CMD_13 = """docker run --env MY_ENVIRONMENT_VAR="ceci est un test" \
+    busybox:1.29 \
+        env"""
+
 def cmd_docker(cmd): os.system(cmd)
 
 
 if __name__ == "__main__":
     cmd_docker(CMD_10)
+ 
+                         
+ 
+
+ 
+                          
